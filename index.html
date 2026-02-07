@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>劉伊庭｜個人簡介與作品集</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding-top: 56px; /* 給固定表頭空間 */
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+      line-height: 1.6;
+      color: #1f2937;
+      background: #f9fafb;
+      scroll-behavior: smooth;
+    }
+
+    /* ===== 固定表頭 ===== */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 56px;
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1100;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    }
+
+    .site-name {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: #1f2937;
+    }
+
+    /* ===== 漢堡選單 ===== */
+    .menu-toggle {
+      position: fixed;
+      top: 1rem;
+      left: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 28px;
+      height: 22px;
+      cursor: pointer;
+      z-index: 1200;
+    }
+    .menu-toggle div {
+      height: 4px;
+      background: #1f2937;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    .menu-toggle.open div {
+      background: #a9985a;
+    }
+    .menu-toggle.open div:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .menu-toggle.open div:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-toggle.open div:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 200px;
+      height: 100%;
+      background: #ffffffe4;
+      box-shadow: 2px 0 12px rgba(51, 51, 51, 0.251);
+      padding-top: 5rem;
+      transition: left 0.3s ease;
+      z-index: 1000;
+    }
+    nav.open { left: 0; }
+    nav a {
+      display: block;
+      padding: 1rem 1.5rem;
+      color: #1f2937;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    nav a:hover { background: #f3f4f6; }
+
+    /* ===== Hero Header ===== */
+    header {
+      background: #a9985a;
+      color: white;
+      padding: 4rem 2rem 2rem;
+      text-align: center;
+    }
+
+    /* ===== Section ===== */
+    section { max-width: 900px; margin: auto; padding: 3rem 2rem; }
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      border-left: 5px solid #a9985a;
+      padding-left: 0.75rem;
+    }
+
+    /* ===== Card ===== */
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.6s ease;
+      opacity: 0;
+      transform: translateY(30px);
+      position: relative;
+    }
+    .card.visible { opacity: 1; transform: translateY(0);}
+    .card:hover { transform: translateY(-6px); box-shadow: 0 16px 32px rgba(0,0,0,0.15); }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #6b7280;
+      font-size: 0.9rem;
+    }
+/* ===== Timeline ===== */
+/* Timeline 線 */
+.timeline-line {
+  position: absolute;
+  top: 1.5rem;        /* 卡片內文字上緣偏移 */
+  left: 1.5rem;       /* 線的左邊位置 */
+  width: 2px;
+  height: calc(100% - 3rem);
+  background: #e5e7eb;
+}
+
+/* Timeline 點 - 左貼線 */
+.timeline-dot {
+  position: absolute;
+  top: 0.3rem;        /* 對齊標題或段落 */
+  left: -1.6rem;             /* 相對於 card padding-left 的起點 */
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #a9985a;
+  border: 3px solid white;
+  box-shadow: 0 0 0 2px #a9985a;
+  transform: translateX(-50%); /* 圓點中心對齊線 */
+}
+
+  </style>
+</head>
+
+<body>
+
+  <!-- 固定表頭 -->
+  <div class="top-bar">
+    <span class="site-name">Yi-Ting Liu</span>
+  </div>
+
+  <!-- 漢堡選單 -->
+  <div class="menu-toggle" id="menu-toggle">
+    <div></div><div></div><div></div>
+  </div>
+
+  <nav id="sidebar">
+    <a href="#about">About me</a>
+    <a href="#education">Education</a>
+    <a href="#experience">Work Experience</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#certifications">Certifications</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <!-- Hero -->
+  <header>
+    <img src="profile.jpg"
+     style="
+       width:140px;
+       height:140px;
+       border-radius:50%;
+       object-fit: cover;
+       margin-bottom:1rem;
+     " />
+    <p>劉伊庭</p>
+    <p>Yi-Ting Liu</p>
+    <p>Institute of Information and Finance Management, National Taipei University of Technology</p>
+  </header>
+
+  <section id="about">
+    <h2>About me</h2>
+    <div class="card animate-on-scroll">
+      <p>我目前就讀於資訊管理相關科系，對人工智慧、網路行銷、商業智慧與數據視覺化充滿興趣。曾參與研究型專題與實務導向的系統分析專案，喜歡從資料中找出「被忽略的機會」，並將複雜的資訊轉化為能支持決策的洞察。</p>
+    </div>
+  </section>
+
+  <section id="education">
+    <h2>Education</h2>
+    <div class="card animate-on-scroll" style="position:relative;padding-left:3.13rem;">
+      <div class="timeline-line"></div>
+      <div style="position:relative;margin-bottom:2rem;">
+        <span class="timeline-dot" style="top:0.3rem;background:#a9985a;"></span>
+        <h3>國立臺北科技大學 National Taipei University of Technology</h3>
+        <p>資訊與財金管理系（碩士）  114-1 GPA : 4.0/4.0</p>
+        <p style="color:#6b7280;">September 2025 - Present</p>
+      </div>
+      <div style="position:relative;">
+        <span class="timeline-dot" style="top:0.3rem;background:#9ca3af;"></span>
+        <h3>東海大學 Tunghai University</h3>
+        <p>資訊管理學系（學士）</p>
+        <p style="color:#6b7280;">Graduated in June 2025</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <h2>Work Experience</h2>
+    <div class="card animate-on-scroll" style="position:relative;padding-left:3.13rem;">
+      <div class="timeline-line"></div>
+      <div style="position:relative;margin-bottom:2rem;">
+        <span class="timeline-dot" style="top:0.6rem;"></span>
+        <h3 style="margin:0;font-size:1.1rem;font-weight:600;">研究獎助生</h3>
+        <p style="margin:0.3rem 0 0.8rem 0;font-size:0.95rem;font-weight:500;color:#374151;">國立臺北科技大學｜資訊與財金管理系</p>
+        <span style="font-size:0.85rem;color:#6b7280;">September 2025 – Present</span>
+        <ul style="margin:0;padding-left:1.2rem;">
+          <li style="line-height:1.7;font-size:0.9rem;">協助規劃與建置管理學院學生與雇主實習回饋系統，包含表單設計、資料蒐集與後端管理需求分析。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <!-- portfolio -->
+  <section id="portfolio">
+    <h2>Portfolio</h2>
+    <!-- portfolio 專題 -->
+    <div class="card animate-on-scroll" style="display:grid;grid-template-columns:0.9fr 1.3fr;gap:2rem;align-items:center;margin-top:2.5rem;">
+      <div style="text-align:center;">
+        <a href="第5組海報.pdf" target="_blank">
+          <img src="第5組海報.pdf" alt="心理治療專題" style="width:70%;max-width:280px;border-radius:12px;box-shadow:0 8px 18px rgba(0,0,0,0.08);" />
+        </a>
+        <p style="font-size:0.8rem;color:#6b7280;margin-top:0.6rem;">點擊查看完整海報</p>
+      </div>
+      <div style="position:relative;">
+        <span style="position:absolute;top:0;right:0;font-size:0.85rem;color:#6b7280;">Feb 2024 – Dec 2024</span>
+        <h3 style="margin-top:0;">大學畢業專題</h3>
+        <p style="font-weight:600;">資通訊技術應用於心理治療與健康風險管理之創新專利</p>
+        <p>以機會發現理論為基礎，運用文字探勘演算法 KeyGraph，分析專利資料庫中相關資通訊科技文件，建構專利技術知識地圖，探索醫療科技領域的發展趨勢與潛在創新機會。</p>
+      </div>
+    </div>
+    <!-- portfolio 研討會 -->
+    <div class="card animate-on-scroll" style="display:grid;grid-template-columns:0.9fr 1.3fr;gap:2rem;align-items:center;margin-top:2.5rem;">
+      <div style="text-align:center;">
+        <a href="論文發表證明.pdf" target="_blank">
+          <img src="論文發表證明.pdf" alt="論文發表證明" style="width:70%;max-width:280px;border-radius:12px;box-shadow:0 8px 18px rgba(0,0,0,0.08);" />
+        </a>
+        <p style="font-size:0.8rem;color:#6b7280;margin-top:0.6rem;">點擊查看完整圖片</p>
+      </div>
+      <div style="position:relative;">
+        <span style="position:absolute;top:0;right:0;font-size:0.85rem;color:#6b7280;">Feb 2024 – May 2024</span>
+        <h3 style="margin-top:0;">研討會論文發表</h3>
+        <p style="margin:0;color:#374151;font-weight:500;">2024 年 5 月｜第 18 屆創新管理知識社群國際研討會</p>
+        <p style="margin:0.8rem 0 0 0;font-style:italic;line-height:1.5;">《適用於心理治療與健康改善之資通訊科技創新專利技術的知識探勘》</p>
+      </div>
+    </div>
+    <!-- portfolio 系統專題 -->
+    <div class="card animate-on-scroll" style="display:grid;grid-template-columns:0.9fr 1.3fr;gap:2rem;align-items:center;margin-top:2.5rem;">
+      <div style="text-align:center;">
+        <a href="image.png" target="_blank">
+          <img src="image.png" alt="系統專題圖片" style="width:70%;max-width:280px;border-radius:12px;box-shadow:0 8px 18px rgba(0,0,0,0.08);" />
+        </a>
+        <p style="font-size:0.8rem;color:#6b7280;margin-top:0.6rem;">點擊查看完整圖片</p>
+      </div>
+      <div style="position:relative;">
+        <span style="position:absolute;top:0;right:0;font-size:0.85rem;color:#6b7280;">Feb 2024 – June 2024</span>
+        <h3 style="margin-top:0;">系統分析與設計</h3>
+        <p style="font-weight:600;">補習班資訊管理系統</p>
+        <p>大學期間與組員合作，透過與補習班接洽和訪談了解其需求，接著依照需求進行系統分析與設計，並使用Microsoft Access軟體製作系統。</p>
+        <p>該系統由多個子模組組成，而我主要負責課程及教室管理系統的系統分析與設計文件撰寫，以及運用 Microsoft Access 進行實作。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 證照 -->
+  <section id="certifications">
+    <h2>Certifications</h2>
+    <!-- 證照 2 -->
+    <div class="card animate-on-scroll">
+    <h3 style="margin-top:1.5rem;">(CERPS) BI 軟體應用師</h3>
+    <a href="C2.JPG" target="_blank">
+      <img src="C2.JPG" alt="證照二" 
+           style="width:100%;max-width:160px;border-radius:12px;margin:0.8rem 0;box-shadow:0 8px 16px rgba(0,0,0,0.08);" /></a>
+    </div>
+    <!-- 證照 1 -->
+    <div class="card animate-on-scroll">
+    <h3>(MTA)Microsoft Technology Associate - Introduction to Programming using HTML and CSS</h3>
+    <a href="C1.png" target="_blank"><img src="C1.png" alt="證照" style="width:100%;max-width:160px;border-radius:12px;margin:0.8rem 0;box-shadow:0 8px 16px rgba(0,0,0,0.08);" /></a>
+    </div>
+  </section>
+  <!-- 聯絡方式 -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <div class="card animate-on-scroll">
+      <p>Email：teresa91051427@gmail.com</p>
+    </div>
+  </section>
+
+  <footer>© 2026 劉伊庭｜GitHub Pages</footer>
+
+  <script>
+    // 漢堡選單控制
+    const toggle = document.getElementById('menu-toggle');
+    const sidebar = document.getElementById('sidebar');
+
+    toggle.addEventListener('click', () => {
+      toggle.classList.toggle('open');
+      sidebar.classList.toggle('open');
+    });
+
+    // 點選選單後自動收起
+    sidebar.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+        toggle.classList.remove('open');
+      });
+    });
+
+     // 滾動動畫
+    const elements = document.querySelectorAll('.animate-on-scroll');
+    function checkVisibility() {
+      const triggerBottom = window.innerHeight * 0.85;
+      elements.forEach(el => {
+        const boxTop = el.getBoundingClientRect().top;
+        if(boxTop < triggerBottom){
+          el.classList.add('visible');
+        }
+      });
+    }
+    window.addEventListener('scroll', checkVisibility);
+    window.addEventListener('load', checkVisibility);
+  </script>
+
+</body>
+</html>
